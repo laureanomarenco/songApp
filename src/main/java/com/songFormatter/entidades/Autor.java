@@ -1,5 +1,8 @@
 package com.songFormatter.entidades;
 
+/**
+ * Modelo de Autor
+ */
 public class Autor {
     private Integer idAutor;
     private String nombre;

@@ -1,5 +1,9 @@
 package com.songFormatter.entidades;
 
+
+/**
+ * Modelo de Usuario
+ */
 public class Usuario {
     private Integer idUsuario;
     private String nickname;

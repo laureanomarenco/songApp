@@ -1,5 +1,8 @@
 package com.songFormatter.entidades;
 
+/**
+ * Modelo de Cancion
+ */
 public class Cancion {
     private Integer idCancion;
     private Integer idUsuario;

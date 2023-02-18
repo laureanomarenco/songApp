@@ -6,11 +6,8 @@ import java.sql.SQLException;
 
 
 /**
- * Conexion a base de datos songFormatter
-  getInstance()    <- Instancia una conexión
-  closeInstance()  <- Cierra una instancia
+ * Conexion a base de datos songFormatter, getInstance() para instanciar una conexión, closeInstance() para cerrarla.
  */
-
 public class ConexionDB {
     private static String urlConexion = "jdbc:mysql://localhost:3306/song_formatter";
     private static String usuariodb = "root";

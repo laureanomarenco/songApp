@@ -7,6 +7,9 @@ import com.songFormatter.interfaces.DAO;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Interacción DB tabla de Usuario, métodos para obtener lista de usuarios, usuario por su id, y CRUD.
+ */
 public class UsuarioDAO implements DAO<Usuario> {
     private Integer idGenerado;
     private Connection getConnection() throws SQLException{
@@ -15,6 +18,7 @@ public class UsuarioDAO implements DAO<Usuario> {
     private Connection closeConnection() throws SQLException{
         return ConexionDB.closeInstance();
     }
+
     @Override
     public Usuario porId(Integer id){
         Usuario usuario = null;

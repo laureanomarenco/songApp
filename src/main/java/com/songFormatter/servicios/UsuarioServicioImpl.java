@@ -7,6 +7,9 @@ import jakarta.inject.Named;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Implementación de los servicios de Usuario.
+ */
 @Named
 public class UsuarioServicioImpl implements ServiciosUsuario {
     @Override

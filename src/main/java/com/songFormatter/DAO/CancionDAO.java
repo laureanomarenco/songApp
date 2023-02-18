@@ -7,6 +7,9 @@ import com.songFormatter.entidades.Usuario;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Interacción DB tabla de Cancion, métodos para obtener lista de usuarios, usuario por su id, y CRUD.
+ */
 public class CancionDAO {
     private Integer idGenerado;
     private Connection getConnection() throws SQLException {

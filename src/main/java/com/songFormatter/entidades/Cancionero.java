@@ -1,5 +1,8 @@
 package com.songFormatter.entidades;
 
+/**
+ * Modelo de Cancionero
+ */
 public class Cancionero {
 //     cancion_cancionero ->      "id": 0,
 //                                "idUser": 1,
