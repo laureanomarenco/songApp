@@ -92,6 +92,7 @@ public class UsuarioDAO implements DAO<Usuario> {
 
             if(consultaID.next()){
                 idGenerado = consultaID.getInt(1);
+                usuario.setId(idGenerado);
                 System.out.println("ID Generado " + idGenerado);
             }
 

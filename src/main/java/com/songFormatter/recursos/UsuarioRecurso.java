@@ -20,11 +20,11 @@ public class UsuarioRecurso {
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postUsuario(Usuario usuario) throws SQLException {
         new UsuarioServicioImpl().crearServicio(usuario);
-        return Response.ok().status(Response.Status.CREATED).entity(usuario).build();
+        return Response.ok().status(Response.Status.CREATED).entity("CREADO").build();
     }
 
 }

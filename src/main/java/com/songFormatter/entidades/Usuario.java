@@ -26,7 +26,7 @@ public class Usuario {
         this.mail = mail;
     }
 
-    public int getId() {
+    public int getIdUsuario() {
         return idUsuario;
     }
 

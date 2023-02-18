@@ -7,13 +7,16 @@ import jakarta.ws.rs.ext.Provider;
 
 import java.io.IOException;
 
+/**
+ * CORS Configuración
+ */
 @Provider
 public class openCORS implements ContainerResponseFilter {
     @Override
     public void filter(ContainerRequestContext requestCtx, ContainerResponseContext responseCtx ) throws IOException {
         responseCtx.getHeaders().add( "Access-Control-Allow-Origin", "*" );
         responseCtx.getHeaders().add( "Access-Control-Allow-Credentials", "true" );
-        responseCtx.getHeaders().add( "Access-Control-Allow-Methods", "GET, POST, DELETE, PUT" );
         responseCtx.getHeaders().add( "Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        responseCtx.getHeaders().add( "Access-Control-Allow-Methods", "GET, POST, DELETE, PUT" );
     }
 }
