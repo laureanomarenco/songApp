@@ -30,8 +30,8 @@ public class UsuarioServicioImpl implements ServiciosUsuario {
     }
 
     @Override
-    public void actualizarServicio(Usuario usuario) throws SQLException {
-        new UsuarioDAO().actualizar(usuario);
+    public void actualizarServicio(Integer id, Usuario usuario) throws SQLException {
+        new UsuarioDAO().actualizar(id, usuario);
     }
 
     @Override

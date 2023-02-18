@@ -23,6 +23,14 @@ public class UsuarioRecurso {
         return Response.ok().status(Response.Status.OK).entity(users).build();
     }
 
+    @Path("/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getById(@PathParam("id") Integer id){
+        Usuario usuario = new UsuarioServicioImpl().porIdServicio(id);
+        return Response.ok().status(Response.Status.OK).entity(usuario).build();
+    }
+
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -32,11 +40,12 @@ public class UsuarioRecurso {
     }
 
 
+    @Path("/{id}")
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putUsuario(Usuario usuario) throws SQLException {
-        new UsuarioServicioImpl().actualizarServicio(usuario);
+    public Response putUsuario(@PathParam("id") Integer id, Usuario usuario) throws SQLException {
+        new UsuarioServicioImpl().actualizarServicio(id, usuario);
         return Response.ok().status(Response.Status.ACCEPTED).entity("Actualizado").build();
     }
 

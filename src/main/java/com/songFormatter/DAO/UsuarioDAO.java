@@ -112,7 +112,7 @@ public class UsuarioDAO implements DAO<Usuario> {
     }
 
     @Override
-    public void actualizar(Usuario usuario) {
+    public void actualizar(Integer id, Usuario usuario) {
         try {
             String updateSQLstring = "UPDATE Usuario SET nickname = ?, img = ?, password = ?, mail = ? WHERE idUsuario =?";
 
@@ -122,7 +122,7 @@ public class UsuarioDAO implements DAO<Usuario> {
             updateSQL.setString(2, usuario.getImg());
             updateSQL.setString(3, usuario.getPassword());
             updateSQL.setString(4, usuario.getMail());
-
+            updateSQL.setInt(5, id);
             updateSQL.executeUpdate();
 
 

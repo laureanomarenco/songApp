@@ -3,6 +3,7 @@ package com.songFormatter.DAO;
 import com.songFormatter.DAO.utils.ConexionDB;
 import com.songFormatter.entidades.Cancion;
 import com.songFormatter.entidades.Usuario;
+import com.songFormatter.interfaces.DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Interacción DB tabla de Cancion, métodos para obtener lista de usuarios, usuario por su id, y CRUD.
  */
-public class CancionDAO {
+public class CancionDAO implements DAO<Cancion> {
     private Integer idGenerado;
     private Connection getConnection() throws SQLException {
         return ConexionDB.getInstance();
@@ -19,7 +20,34 @@ public class CancionDAO {
     private Connection closeConnection() throws SQLException{
         return ConexionDB.closeInstance();
     }
-    public Integer nuevaCancion(Cancion cancion) {
+
+    @Override
+    public ArrayList listar() {
+        ArrayList<Cancion> canciones = new ArrayList<>();
+        Cancion cancion = null;
+
+        try {
+            String allSQLstring = "SELECT idUsuario, idAutor, titulo, detalles, anio, letra FROM Cancion";
+            PreparedStatement selectAll = this.getConnection().prepareStatement(allSQLstring);
+
+            ResultSet resultado = selectAll.executeQuery();
+            while (resultado.next()){
+                cancion = cancionRs(resultado);
+                canciones.add(cancion);
+            }
+
+        } catch (SQLException e){
+            System.err.println("Error en SQL");
+            e.printStackTrace();
+        } catch (Exception e){
+            System.err.println("Error generico");
+            e.printStackTrace();
+        }
+
+        return canciones;
+    }
+    @Override
+    public void crear(Cancion cancion) throws SQLException {
         try {
             String sqlInsert = "INSERT INTO Cancion (idUsuario, idAutor, titulo, detalles, anio, letra) VALUES (?, ?, ?, ?, ?)";
 
@@ -46,18 +74,11 @@ public class CancionDAO {
         } catch (Exception e){
             System.err.println("Error generico");
             e.printStackTrace();
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e){
-                e.printStackTrace();
-            }
         }
-
-        return this.idGenerado;
     }
 
-    public void actualizarCancion(Cancion cancion){
+    @Override
+    public void actualizar(Integer id, Cancion cancion) throws SQLException {
         try {
             String updateSQLstring = "UPDATE Cancion SET titulo = ?, detalles = ?, anio = ?, letra = ? WHERE idCancion =?";
 
@@ -85,9 +106,8 @@ public class CancionDAO {
             }
         }
     }
-
-
-    public void borrarCancion(Integer id) {
+    @Override
+    public void eliminar(Integer id) {
         try {
             String deleteSQLstring = "DELETE FROM Cancion WHERE idCancion = ?";
 
@@ -151,37 +171,18 @@ public class CancionDAO {
         return cancion;
     }
 
-    public ArrayList<Usuario> recuperarUsuario(){
-        ArrayList<Usuario> usuarios = new ArrayList<>();
-        Usuario usuario = null;
+    public Cancion cancionRs(ResultSet rs) throws SQLException {
+        Cancion cancion = null;
+        Integer idUsuario = rs.getInt(1);
+        Integer idAutor = rs.getInt(2);
+        String titulo = rs.getString(3);
+        String detalles = rs.getString(4);
+        Integer anio = rs.getInt(5);
+        String letra = rs.getString(6);
 
-        try {
-            String allSQLstring = "SELECT idUsuario, nickname, img FROM Usuario";
-            PreparedStatement selectAll = this.getConnection().prepareStatement(allSQLstring);
+        cancion = new Cancion(idUsuario, idAutor, titulo, detalles, anio, letra);
 
-            ResultSet resultado = selectAll.executeQuery();
-            while (resultado.next()){
-                usuario = new Usuario();
-                usuario.setNickname(resultado.getString("nickname"));
-                usuario.setImg(resultado.getString("img"));
-                usuario.setId(resultado.getInt("idUsuario"));
-                usuarios.add(usuario);
-            }
-
-        } catch (SQLException e){
-            System.err.println("Error en SQL");
-            e.printStackTrace();
-        } catch (Exception e){
-            System.err.println("Error generico");
-            e.printStackTrace();
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
-
-        return usuarios;
+        return cancion;
     }
+
 }

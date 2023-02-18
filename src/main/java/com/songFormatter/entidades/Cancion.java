@@ -17,6 +17,16 @@ public class Cancion {
     public Cancion() {
     }
 
+    public Cancion(Integer idCancion, Integer idUsuario, Integer idAutor, String titulo, String detalles, int anio, String letra) {
+        this.idCancion = idCancion;
+        this.idUsuario = idUsuario;
+        this.idAutor = idAutor;
+        this.titulo = titulo;
+        this.detalles = detalles;
+        this.anio = anio;
+        this.letra = letra;
+    }
+
     public Cancion(Integer idUsuario, Integer idAutor, String titulo, String detalles, int anio, String letra) {
         this.idUsuario = idUsuario;
         this.idAutor = idAutor;
