@@ -27,7 +27,7 @@ public class CancionDAO implements DAO<Cancion> {
         Cancion cancion = null;
 
         try {
-            String allSQLstring = "SELECT idUsuario, idAutor, titulo, detalles, anio, letra FROM Cancion";
+            String allSQLstring = "SELECT idCancion, idUsuario, idAutor, titulo, detalles, anio, letra FROM Cancion";
             PreparedStatement selectAll = this.getConnection().prepareStatement(allSQLstring);
 
             ResultSet resultado = selectAll.executeQuery();
@@ -49,15 +49,16 @@ public class CancionDAO implements DAO<Cancion> {
     @Override
     public void crear(Cancion cancion) throws SQLException {
         try {
-            String sqlInsert = "INSERT INTO Cancion (idUsuario, idAutor, titulo, detalles, anio, letra) VALUES (?, ?, ?, ?, ?)";
+            String sqlInsert = "INSERT INTO Cancion (idUsuario, idAutor, titulo, detalles, anio, letra) VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement comandoSQL = this.getConnection().prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
 
             comandoSQL.setInt(1, cancion.getIdUsuario());
-            comandoSQL.setString(2, cancion.getTitulo());
-            comandoSQL.setString(3, cancion.getDetalles());
-            comandoSQL.setInt(4, cancion.getAnio());
-            comandoSQL.setString(5, cancion.getLetra());
+            comandoSQL.setInt(2, cancion.getIdAutor());
+            comandoSQL.setString(3, cancion.getTitulo());
+            comandoSQL.setString(4, cancion.getDetalles());
+            comandoSQL.setInt(5, cancion.getAnio());
+            comandoSQL.setString(6, cancion.getLetra());
 
             comandoSQL.execute();
 
@@ -80,7 +81,7 @@ public class CancionDAO implements DAO<Cancion> {
     @Override
     public void actualizar(Integer id, Cancion cancion) throws SQLException {
         try {
-            String updateSQLstring = "UPDATE Cancion SET titulo = ?, detalles = ?, anio = ?, letra = ? WHERE idCancion =?";
+            String updateSQLstring = "UPDATE Cancion SET titulo = ?, detalles = ?, anio = ?, letra = ? WHERE idCancion = ?";
 
             PreparedStatement updateSQL = this.getConnection().prepareStatement(updateSQLstring);
 
@@ -88,7 +89,7 @@ public class CancionDAO implements DAO<Cancion> {
             updateSQL.setString(2, cancion.getDetalles());
             updateSQL.setInt(3, cancion.getAnio());
             updateSQL.setString(4, cancion.getLetra());
-            updateSQL.setInt(5, cancion.getIdCancion());
+            updateSQL.setInt(5, id);
             updateSQL.executeUpdate();
 
 
@@ -98,12 +99,6 @@ public class CancionDAO implements DAO<Cancion> {
         } catch (Exception e) {
             System.err.println("Error generico");
             e.printStackTrace();
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e){
-                e.printStackTrace();
-            }
         }
     }
     @Override
@@ -122,12 +117,6 @@ public class CancionDAO implements DAO<Cancion> {
         } catch (Exception e){
             System.err.println("Error generico");
             e.printStackTrace();
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e){
-                e.printStackTrace();
-            }
         }
     }
 
@@ -148,8 +137,10 @@ public class CancionDAO implements DAO<Cancion> {
                 cancion = new Cancion();
                 cancion.setIdCancion(resultado.getInt("idCancion"));
                 cancion.setIdAutor(resultado.getInt("idAutor"));
+                cancion.setIdUsuario(resultado.getInt("idUsuario"));
                 cancion.setTitulo(resultado.getString("titulo"));
                 cancion.setAnio(resultado.getInt("anio"));
+                cancion.setLetra(resultado.getString("letra"));
             }
 
 
@@ -160,29 +151,22 @@ public class CancionDAO implements DAO<Cancion> {
         } catch (Exception e){
             System.err.println("Error generico");
             e.printStackTrace();
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e){
-                e.printStackTrace();
-            }
         }
 
         return cancion;
     }
-
     public Cancion cancionRs(ResultSet rs) throws SQLException {
         Cancion cancion = null;
-        Integer idUsuario = rs.getInt(1);
+        Integer idCancion = rs.getInt(1);
         Integer idAutor = rs.getInt(2);
-        String titulo = rs.getString(3);
-        String detalles = rs.getString(4);
-        Integer anio = rs.getInt(5);
-        String letra = rs.getString(6);
+        Integer idUsuario = rs.getInt(3);
+        String titulo = rs.getString(4);
+        String detalles = rs.getString(5);
+        Integer anio = rs.getInt(6);
+        String letra = rs.getString(7);
 
-        cancion = new Cancion(idUsuario, idAutor, titulo, detalles, anio, letra);
+        cancion = new Cancion(idCancion, idUsuario, idAutor, titulo, detalles, anio, letra);
 
         return cancion;
     }
-
 }

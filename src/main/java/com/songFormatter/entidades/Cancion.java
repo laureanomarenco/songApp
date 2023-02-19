@@ -10,14 +10,14 @@ public class Cancion {
 
     private String titulo;
     private String detalles;
-    private int anio;
+    private Integer anio;
     private String letra;
 
 
     public Cancion() {
     }
 
-    public Cancion(Integer idCancion, Integer idUsuario, Integer idAutor, String titulo, String detalles, int anio, String letra) {
+    public Cancion(Integer idCancion, Integer idUsuario, Integer idAutor, String titulo, String detalles, Integer anio, String letra) {
         this.idCancion = idCancion;
         this.idUsuario = idUsuario;
         this.idAutor = idAutor;
@@ -27,7 +27,7 @@ public class Cancion {
         this.letra = letra;
     }
 
-    public Cancion(Integer idUsuario, Integer idAutor, String titulo, String detalles, int anio, String letra) {
+    public Cancion(Integer idUsuario, Integer idAutor, String titulo, String detalles, Integer anio, String letra) {
         this.idUsuario = idUsuario;
         this.idAutor = idAutor;
         this.titulo = titulo;
@@ -80,7 +80,7 @@ public class Cancion {
         return anio;
     }
 
-    public void setAnio(int anio) {
+    public void setAnio(Integer anio) {
         this.anio = anio;
     }
 
