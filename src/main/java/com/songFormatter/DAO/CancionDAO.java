@@ -2,7 +2,6 @@ package com.songFormatter.DAO;
 
 import com.songFormatter.DAO.utils.ConexionDB;
 import com.songFormatter.entidades.Cancion;
-import com.songFormatter.entidades.Usuario;
 import com.songFormatter.interfaces.DAO;
 
 import java.sql.*;
@@ -49,12 +48,12 @@ public class CancionDAO implements DAO<Cancion> {
     @Override
     public void crear(Cancion cancion) throws SQLException {
         try {
-            String sqlInsert = "INSERT INTO Cancion (idUsuario, idAutor, titulo, detalles, anio, letra) VALUES (?, ?, ?, ?, ?, ?)";
+            String sqlInsert = "INSERT INTO Cancion (idAutor, idUsuario, titulo, detalles, anio, letra) VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement comandoSQL = this.getConnection().prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
 
-            comandoSQL.setInt(1, cancion.getIdUsuario());
-            comandoSQL.setInt(2, cancion.getIdAutor());
+            comandoSQL.setInt(1, cancion.getIdAutor());
+            comandoSQL.setInt(2, cancion.getIdUsuario());
             comandoSQL.setString(3, cancion.getTitulo());
             comandoSQL.setString(4, cancion.getDetalles());
             comandoSQL.setInt(5, cancion.getAnio());
@@ -139,6 +138,7 @@ public class CancionDAO implements DAO<Cancion> {
                 cancion.setIdAutor(resultado.getInt("idAutor"));
                 cancion.setIdUsuario(resultado.getInt("idUsuario"));
                 cancion.setTitulo(resultado.getString("titulo"));
+                cancion.setDetalles(resultado.getString("detalles"));
                 cancion.setAnio(resultado.getInt("anio"));
                 cancion.setLetra(resultado.getString("letra"));
             }
@@ -165,7 +165,7 @@ public class CancionDAO implements DAO<Cancion> {
         Integer anio = rs.getInt(6);
         String letra = rs.getString(7);
 
-        cancion = new Cancion(idCancion, idUsuario, idAutor, titulo, detalles, anio, letra);
+        cancion = new Cancion(idCancion, idAutor, idUsuario, titulo, detalles, anio, letra);
 
         return cancion;
     }

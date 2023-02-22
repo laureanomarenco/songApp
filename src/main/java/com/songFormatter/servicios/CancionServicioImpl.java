@@ -7,6 +7,9 @@ import com.songFormatter.entidades.Cancion;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Implementación de los servicios de Usuario.
@@ -16,6 +19,8 @@ public class CancionServicioImpl implements ServiciosCancion{
     @Override
     public ArrayList<Cancion> listarServicio() {
         ArrayList<Cancion> canciones = new CancionDAO().listar();
+        Comparator<Cancion> cancionesPorNombre = (Cancion c1, Cancion c2) -> c1.getTitulo().compareTo(c2.getTitulo());
+        Collections.sort(canciones, cancionesPorNombre);
         return canciones;
     }
 
